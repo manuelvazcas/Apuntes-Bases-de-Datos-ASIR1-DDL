@@ -19,3 +19,5 @@ DDL, lenguaje de definición de datos, es un sublenguaje de SQL que permite a lo
 ### DDL CREATE<a name="id2"></a> ###
 
 La sentencia Create sirve para crear una nueva base de datos ```CREATE DATABASE``` o ```CREATE SCHEMA```, tabla ```CRREATE TABLE```, dominio ```CREATE DOMAIN```, usarios ```CREATE USER```. Create crea un objeto dentro de un sistema de gestión de bases de datos relacionales, podiendo llegar a crear todos los objetos anteriormente puestos. Ahora especificaremos un poco más cada una de estas sentencias.
+
+```CREATE DATABASE``` sirve para dar una orden para crear una nueva base de datos,

@@ -5,6 +5,7 @@
 2. [Create](#id2)
 	- [Create Database](#id2.1)
 	- [Create Domain](#id2.2) 
+	- [Create table](#id2.3)
 3. [Drop](#id4)
 4. [Alter](#id5)
 5. [Ejemplo Create table](#id6)
@@ -28,8 +29,15 @@ Sirve para dar una orden para crear una nueva base de datos, tambien podriamos u
 	(Si no existe) nombreDATABASE
 	(CHARACTER SET nombreCHARSET);
 
-#####`CREATE DOMAIN`<a name ="id2.1"></a>
+#####`CREATE DOMAIN`<a name ="id2.2"></a>
 Sirve para no tener que repetir siempre el mismo dato en una base de datos, así cuando aparezcan diferentes atributos con el mismo tipo de datos usaremos un `CREATE DOMAIN`. La sintaxis que usaremos será:
 
-    CREATE DOMAIN [nombreDATABASE] (nombreDOMINIO) <tipoDato>
+    CREATE DOMAIN [nombreDATABASE] (nombreDOMINIO) <tipoDato>;
 	
+#####`CREATE TABLE`<a name ="id2.3"></a>
+Sirve para crear una tabla dentro de una base de datos, el contenido que queramos meter dentro de ella tendrá que ir entre paréntesis. Dentro de los paréntesis pueden ir los atributos, los cuales tenemos que especificar los tipos de datos que queremos que vayan con cada atributo, también tendremos que indicar si hay Primary Keys, Foreign o si es NOT NULL , aunque en el segundo y tercer caso no siempre tiene que existir. La sintaxis que se usará será:
+
+	CREATE TABLE [nombreDATABASE] <nombreTABLE> (
+		<nombreATRIB1> <tipoDato> {ClavePrimaria}
+		<nombreATRIB2> <nombreDOMINIO>...
+	);

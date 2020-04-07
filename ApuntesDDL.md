@@ -6,8 +6,8 @@
 	- [Create Database](#id2.1)
 	- [Create Domain](#id2.2) 
 	- [Create table](#id2.3)
-3. [Drop](#id4)
-4. [Alter](#id5)
+3. [Alter](#id4)
+4. [Drop](#id5)
 5. [Ejemplo Create table](#id6)
 6. [Constraint primary key](#id7)
 7. [Constraint foreign key](#id8)
@@ -41,3 +41,12 @@ Sirve para crear una tabla dentro de una base de datos, el contenido que queramo
 		<nombreATRIB1> <tipoDato> {ClavePrimaria}
 		<nombreATRIB2> <nombreDOMINIO>...
 	);
+
+#### ALTER<a name="id3"></a> ####
+Sirve para poder modificar todo tipo de cosas en una base de datos, pero nos centraremos en las tablas `ALTER TABLE`, con el que podemos añadir 
+`ADD` o eliminar `DROP` columnas y restricciones. Usando `CASCADE` hacemos que se elimine todo de lo que tenga dependencia una columna o una restricción, usando `RESTRICT` no se eliminará una columna si otras tienen dependencia de ella. La sintaxis que utilizaremos será: 
+	
+	ALTER TABLE <nombreTABLE>
+	ADD <nombreColumna> ...
+	DROP <nombreColumna> (CASCADE/RESTRICT);
+Otra cosa que podemos utilizar con `ALTER` sería modificar una columna, usaríamos `ALTER COLUMN`

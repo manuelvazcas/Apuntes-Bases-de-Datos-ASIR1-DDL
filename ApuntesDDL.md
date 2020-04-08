@@ -126,3 +126,15 @@ También los podemos utilizar con `CONSTRAINT`:
 	
 	CONSTRAINT UQ UNIQUE (nombreATRIBUTO,...);
 
+##### CONSTRAINT CHECK <a name="id5.4"></a> #####
+Sirve para limitar el rango de valores que puede tener una columna. Una tabla puede tener varios `CHECK`. La sintaxis sería:
+	
+	 CREATE TABLE nombreTable (
+	nombreAtributo1 CHAR(*) PRIMARY KEY,
+	nombreAtributo2 CHAR(*) CHECK (valor) ,
+	...
+	);
+También los podemos utilizar con `CONSTRAINT`:
+
+	CONSTRAINT CHECK (nombreATRIBUTO,...)
+	CHECK nombreATRIBUTO (valor);

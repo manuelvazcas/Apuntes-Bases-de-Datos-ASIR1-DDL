@@ -6,12 +6,15 @@
 	- [Create Database](#id2.1)
 	- [Create Domain](#id2.2) 
 	- [Create table](#id2.3)
-3. [Alter](#id4)
-4. [Drop](#id5)
-5. [Constraint primary key](#id7)
-6. [Constraint foreign key](#id8)
-7. [Constraint unique](#id9)
-8. [Constraint check](#id10)
+3. [Alter](#id3)
+4. [Drop](#id4)
+5. [Constraints](#id5)
+	- [Constraint primary key](#id5.1)
+	- [Constraint foreign key](#id5.2) 
+	- [Constraint not null](#id5.3)
+	- [Constraint unique](#id5.4)
+	- [Constraint check](#id5.5)
+6. [Ejemplo creación de una base de datos](#id6)
 
 ### DEFINICIÓN DDL<a name="id1"></a> ###
 
@@ -62,4 +65,26 @@ Para borrar una tabla seria igual.
 	DROP TABLE [nombreTABLE]
 	(CASCADE/RESTRICT);
 
-	 
+#### CONSTRAINT <a name="id5"></a> ####
+Sirve para limitar los tipos de datos que podemos meter en una tabla. Estas restricciones podemos añadirlas cuando la creamos con `CREATE TABLE` o después con `ALTER TABLE`. Los tipos de `CONSTRAINT` que veremos serán:
+
+- `PRIMARY KEY`
+- `FOREIGN KEY`
+- `NOT NULL`
+- `UNIQUE`
+- `CHECK`
+
+##### CONSTRAINT PRIMARY KEY <a name="id5.1"></a> #####
+Asegura que los valores sean únicos para cada registro, cada tabla tiene que tener una obligatoriamente. La sintaxis será:
+	
+	[CONSTRAINT <nombreCONSTRAINT>]
+		PRIMARY KEY (nombreAtributo)
+Otra manera de poder usarlo sería:
+
+	CREATE TABLE nombreTABLE(
+		nombreAtributo CHAR(*) PRIMARY KEY,
+		...
+	);
+Esto solo lo podemos hacer si la clave principal es un atributo y no varios.
+
+##### CONSTRAINT FOREIGN KEY <a name="id5.2"></a> #####

@@ -8,11 +8,10 @@
 	- [Create table](#id2.3)
 3. [Alter](#id4)
 4. [Drop](#id5)
-5. [Ejemplo Create table](#id6)
-6. [Constraint primary key](#id7)
-7. [Constraint foreign key](#id8)
-8. [Constraint unique](#id9)
-9. [Constraint check](#id10)
+5. [Constraint primary key](#id7)
+6. [Constraint foreign key](#id8)
+7. [Constraint unique](#id9)
+8. [Constraint check](#id10)
 
 ### DEFINICIÓN DDL<a name="id1"></a> ###
 
@@ -50,3 +49,16 @@ Sirve para poder modificar todo tipo de cosas en una base de datos, pero nos cen
 	ADD <nombreColumna> ...
 	DROP <nombreColumna> (CASCADE/RESTRICT);
 Otra cosa que podemos utilizar con `ALTER` sería modificar una columna, usaríamos `ALTER COLUMN`
+
+#### DROP<a name="id4"></a> ####
+Como ya vimos en la explicación anterior DROP se utiliza para eliminar elementos de una base de datos. La sintaxis que utilizaremos será:
+
+	DROP SCHEMA [NombreDATABASE]
+	(CASCADE/RESTRICT);
+Podemos usar `CASCADE` si queremos borrar la base de datos aunque tenga datos en ella o podemos usar `RESTRICT` si queremos que no la borre si tiene datos en ella.
+
+Para borrar una tabla seria igual.
+	
+	DROP TABLE [nombreTABLE]
+	(CASCADE/RESTRICT);
+	 

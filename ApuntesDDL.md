@@ -61,4 +61,5 @@ Para borrar una tabla seria igual.
 	
 	DROP TABLE [nombreTABLE]
 	(CASCADE/RESTRICT);
+
 	 

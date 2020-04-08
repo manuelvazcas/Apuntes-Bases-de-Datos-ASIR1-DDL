@@ -105,3 +105,11 @@ No es obligatorio poner el nombre del atributo referenciado, si no lo indicamos 
 
 
 ##### CONSTRAINT NOT NULL <a name="id5.3"></a> #####
+Sirve para no aceptar valores nulos. La sintaxis será:
+	
+	CREATE TABLE nombreTable (
+	nombreAtributo1 CHAR(*) PRIMARY KEY
+	nombreAtributo2 CHAR(*) NOT NULL,
+	...
+	);
+Esto hace que el atributo 2 no pueda ir vacío, tendremos que darle un valor.

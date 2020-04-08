@@ -138,3 +138,136 @@ También los podemos utilizar con `CONSTRAINT`:
 
 	CONSTRAINT CHECK (nombreATRIBUTO,...)
 	CHECK nombreATRIBUTO (valor);
+
+#### Ejemplo creación de una base de datos <a name="id6"></a> ####
+![Ejemplo](img/Ejemplo-1.jpeg)
+A través de esta imagen con los datos que nos da el ejercicio haremos la base de datos con lo explicado en estos apuntes.
+
+    CREATE DOMAIN Tipo_Código CHAR(5);
+    CREATE DOMAIN Nome_Válido VARCHAR(40);
+    
+    CREATE TABLE Servizo (
+      Clave_Servizo Tipo_Codigo,
+      Nome_Servizo  Nome_Válido,
+      PRIMARY KEY (Clave_Servizo, Nome_Servizo)
+    );
+    
+    CREATE TABLE Dependencia (
+      Código_Dependencia Tipo_Código,
+      Nome_Dependencia   Nome_Válido NOT NULL,
+      FunciónVARCHAR(20),
+      Localización   VARCHAR(20),
+      Clave_Servizo  Tipo_Codigo NOT NULL,
+      Nome_Servizo   Nome_Válido NOT NULL,
+      PRIMARY KEY (Código_Dependencia),
+      UNIQUE (Nome_Dependencia),
+      FOREIGN KEY (Clave_Servizo, Nome_Servizo)
+    REFERENCES Servizo (Clave_Servizo, Nome_Servizo)
+    ON DELETE Cascade
+    ON UPDATE Cascade
+    );
+    
+    CREATE TABLE Cámara (
+      Código_Dependencia Tipo_Código,
+      Categoría  Nome_Válido NOT NULL,
+      Capacidade INTEGER NOT NULL,
+      PRIMARY KEY (Código_Dependencia),
+      FOREIGN KEY (Código_Dependencia)
+    REFERENCES Dependencia
+    ON DELETE Cascade
+    ON UPDATE Cascade
+    );
+    
+    CREATE TABLE Tripulación (
+      Código_Tripulación Tipo_Código PRIMARY KEY,
+      Nome_Tripulación   Nome_Válido,
+      Categoría  CHAR(20)NOT NULL,
+      AntigüidadeINTEGER DEFAULT 0,
+      ProcedenciaCHAR(20),
+      AdmCHAR(20)NOT NULL,
+      Código_Dependencia Tipo_Código NOT NULL,
+      Código_Cámara  Tipo_Código NOT NULL,
+      FOREIGN KEY (Código_Cámara)
+    REFERENCES Cámara (Código_Dependencia)
+    ON UPDATE Cascade
+    ON DELETE Cascade
+    );
+    
+    ALTER TABLE Tripulación
+      ADD FOREIGN KEY (Código_Dependencia)
+    REFERENCES Dependencia (Código_Dependencia)
+    ON UPDATE Cascade
+    ON DELETE Cascade;
+    
+    CREATE TABLE Planeta (
+      Código_Planeta Tipo_Código  PRIMARY KEY,
+      Nome_Planeta   Nome_Válido NOT NULL UNIQUE,
+      GalaxiaCHAR(15)NOT NULL,
+      CoordenadasCHAR(15)NOT NULL,
+      UNIQUE(Coordenadas)
+     );
+    
+    CREATE TABLE Visita (
+      Código_Tripulación Tipo_Código,
+      Código_Planeta Tipo_Código,
+      Data_VisitaDATE,
+      Tempo  INTEGER  NOT NULL,
+      PRIMARY KEY (Código_Tripulación, Código_Planeta, Data_Visita),
+      FOREIGN KEY (Código_Tripulación)
+    REFERENCES Tripulación
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+      FOREIGN KEY (Código_Planeta)
+    REFERENCES Planeta
+    ON UPDATE CASCADE
+    ON DELETE CASCADE 
+    );
+    
+    CREATE TABLE Habita (
+      Código_PlanetaTipo_Código,
+      Nome_Raza Nome_Válido,
+      Poboación_Parcial INTEGER NOT NULL,
+      PRIMARY KEY (Código_Planeta, Nome_Raza),
+      FOREIGN KEY (Código_Planeta)
+    REFERENCES Planeta
+    ON UPDATE Cascade
+    ON DELETE Cascade
+    );
+    
+    CREATE TABLE Raza (
+      Nome_Raza   Nome_Válido  PRIMARY KEY,
+      Altura  INTEGER  NOT NULL,  -- cm
+      Anchura INTEGER  NOT NULL,  -- cm
+      PesoINTEGER  NOT NULL,  -- g
+      Poboación_Total INTEGER  NOT NULL
+    );
+    
+    ALTER TABLE Habita
+      ADD CONSTRAINT FK_Raza
+    FOREIGN KEY (Nome_Raza)
+      REFERENCES Raza
+      ON UPDATE CASCADE
+      ON DELETE CASCADE;
+    
+    ALTER TABLE Cámara
+      ADD CONSTRAINT Capacidade_maior_de_cero
+    CHECK (capacidade > 0);
+    
+    -- Unha restrición razonable que non aparece no enunciado é
+    -- "non podan estar asignados a unha mesma cámara máis tripulantes dos marcados na capacidade".
+    -- NOTA: Non comprobei contra a base de datos esta solución, pero coido que é correcta.
+    CREATE ASSERTION Non_Excedemos_A_Capacidade_Das_Cámaras
+    CHECK (NOT EXISTS
+      SELECT Cámara.Código_Dependencia
+      FROM Cámara
+      WHERE Cámara.Capacidade <= (SELECT COUNT (*)
+      FROM Tripulación
+      GROUP BY Tripulación.Código_Cámara
+      HAVING Cámara.Código_Dependencia = Tripulación.Código_Cámara)
+    );
+    
+    CREATE ASSERTION Non_Excedemos_A_Capacidade_Das_Cámaras
+      -- PSEUDOCÓDIGO OLLO!!!!!
+      CHECK (
+    Cámara.Capacidade <=
+      COUNT(*) GROUP BY Tripulación.Código_Cámara);

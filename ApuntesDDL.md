@@ -113,3 +113,16 @@ Sirve para no aceptar valores nulos. La sintaxis será:
 	...
 	);
 Esto hace que el atributo 2 no pueda ir vacío, tendremos que darle un valor.
+
+##### CONSTRAINT UNIQUE <a name="id5.3"></a> #####
+Sirve para hacer que no se pueda repetir los elementos de la columna, la podemos acompañar junto a `NOT NULL`. La sintaxis será: 
+	
+	 CREATE TABLE nombreTable (
+	nombreAtributo1 CHAR(*) NOT NULL UNIQUE,
+	nombreAtributo2 CHAR(*) NOT NULL,
+	...
+	);
+También los podemos utilizar con `CONSTRAINT`:
+	
+	CONSTRAINT UQ UNIQUE (nombreATRIBUTO,...);
+

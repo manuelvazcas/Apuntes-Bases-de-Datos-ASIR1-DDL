@@ -88,3 +88,20 @@ Otra manera de poder usarlo sería:
 Esto solo lo podemos hacer si la clave principal es un atributo y no varios.
 
 ##### CONSTRAINT FOREIGN KEY <a name="id5.2"></a> #####
+Sirve para relacionar 2 tablas, cuando la usamos tenemos que indicar a tabla hace referencia esa clave foránea. La sintaxis será:
+
+	FOREIGN KEY (nombreAtributo)
+	REFERENCES <nombreTABLE> (nombreAtributoReferenciado)
+	[ON DELETE CASCADE / NO ACTION / SET NULL / SET DEFAULT]
+	[ON UPDATE CASCADE / NO ACTION / SET NULL / SET DEFAULT];
+No es obligatorio poner el nombre del atributo referenciado, si no lo indicamos cogerá la clave principal de la tabla o el atributo que se llame igual que el otro. También podemos ver que tenemos diferentes criterios:
+
+- `ON DELETE`: Sirve para decir que hacer cuando los datos son borrados
+- `ON UPDATE`: Sirve para decir que hacer cuando se actualizan los datos.
+- `CASCADE`: Sirve para poder eliminar o actualizar los datos que provenga de otra tabla y esten modificados.
+- `No ACTION`: Sirve para dejar los datos como estaban, no elimina ni actualiza. Es el valor por defecto si no se indica nada.
+- `SET NULL`: Si los datos son modificados o eliminados el valor es nulo.
+- `SET DEFAULT`: Si los datos son modificados o eliminados el valor es el predeterminado. Poco usado ya que puede dar problemas.
+
+
+##### CONSTRAINT NOT NULL <a name="id5.3"></a> #####

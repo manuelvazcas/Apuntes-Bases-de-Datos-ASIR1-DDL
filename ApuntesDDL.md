@@ -145,12 +145,14 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
 
     CREATE DOMAIN Tipo_Código CHAR(5);
     CREATE DOMAIN Nome_Válido VARCHAR(40);
+Primero creamos los domain que vayamos a usar para los atributos, así será más cómodo hacer el ejercicio.
     
     CREATE TABLE Servizo (
       Clave_Servizo Tipo_Codigo,
       Nome_Servizo  Nome_Válido,
       PRIMARY KEY (Clave_Servizo, Nome_Servizo)
     );
+Creamos una la tabla Servizo, sus 2 atributos son PK, así que lo indicamos abajo
     
     CREATE TABLE Dependencia (
       Código_Dependencia Tipo_Código,
@@ -166,7 +168,8 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
     ON DELETE Cascade
     ON UPDATE Cascade
     );
-    
+En la tabla de Dependencia tenemos que añadir como FK los 2 atributos de la tabla anterior. Añadimos un `CONSTRAINT UNIQUE` para Nome_Dependencia para que no se pueda repetir.
+
     CREATE TABLE Cámara (
       Código_Dependencia Tipo_Código,
       Categoría  Nome_Válido NOT NULL,
@@ -177,7 +180,8 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
     ON DELETE Cascade
     ON UPDATE Cascade
     );
-    
+En la tabla Cámara añadimos un FK de la tabla Dependencia que es la PK de las dos tablas.
+
     CREATE TABLE Tripulación (
       Código_Tripulación Tipo_Código PRIMARY KEY,
       Nome_Tripulación   Nome_Válido,
@@ -192,12 +196,14 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
     ON UPDATE Cascade
     ON DELETE Cascade
     );
+En la tabla Tripulación vemos que el atributo de categoría no puede ser nulo, la PK es Código_Tripulación, vemos como hay 2 FK que no pueden ser nulas.
     
     ALTER TABLE Tripulación
       ADD FOREIGN KEY (Código_Dependencia)
     REFERENCES Dependencia (Código_Dependencia)
     ON UPDATE Cascade
     ON DELETE Cascade;
+Como falto añadir la FK de Código_Dependencia hacemos un ALTER para agregarla a la base de datos.
     
     CREATE TABLE Planeta (
       Código_Planeta Tipo_Código  PRIMARY KEY,
@@ -206,7 +212,8 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
       CoordenadasCHAR(15)NOT NULL,
       UNIQUE(Coordenadas)
      );
-    
+Creamos una tabla Planeta con PK Código planeta y no nulos para todos los atributos y las cordenadas unicas ya que no puede haber 2 planetas en el mismo sitio.
+
     CREATE TABLE Visita (
       Código_Tripulación Tipo_Código,
       Código_Planeta Tipo_Código,
@@ -222,6 +229,7 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
     ON UPDATE CASCADE
     ON DELETE CASCADE 
     );
+La tabla visita tendrá como PK Código_ Tripulación, Código_ Planeta y Data_Visita, Tempo que obligatoriamente será un numero por el Integer y no puede ser nulo, 2 FK, una de la tabla tripulacion (Codigo _Tripulacion) y otra de la tabla Planeta (Código _Planeta). 
     
     CREATE TABLE Habita (
       Código_PlanetaTipo_Código,
@@ -233,14 +241,16 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
     ON UPDATE Cascade
     ON DELETE Cascade
     );
+La tabla Habita tendrá 2 PK una de ellas es FK que pertenece a la tabla Planeta (Código_Planeta), la otra será Nome _Raza. 
     
     CREATE TABLE Raza (
       Nome_Raza   Nome_Válido  PRIMARY KEY,
       Altura  INTEGER  NOT NULL,  -- cm
       Anchura INTEGER  NOT NULL,  -- cm
-      PesoINTEGER  NOT NULL,  -- g
+      Peso INTEGER  NOT NULL,  -- g
       Poboación_Total INTEGER  NOT NULL
     );
+La tabla Raza tendrá como PK Nome_Raza y Nome _Valido, los demas atributos no podran ser nulos, los atributos alura, anchura y Peso serán Integers, es decir un número y irán acompañados al final de ellos con su unidad correspondiente.
     
     ALTER TABLE Habita
       ADD CONSTRAINT FK_Raza
@@ -248,10 +258,12 @@ A través de esta imagen con los datos que nos da el ejercicio haremos la base d
       REFERENCES Raza
       ON UPDATE CASCADE
       ON DELETE CASCADE;
+Al crear la tabla Raza tenemos que añadir una FK a la tabla Habita, el atributo será Nome_Raza.
     
     ALTER TABLE Cámara
       ADD CONSTRAINT Capacidade_maior_de_cero
     CHECK (capacidade > 0);
+
     
     -- Unha restrición razonable que non aparece no enunciado é
     -- "non podan estar asignados a unha mesma cámara máis tripulantes dos marcados na capacidade".

@@ -58,3 +58,13 @@ Ejemplo:
 Lo que hará esto es que el alumno con nombre Manuel tendrá como edad 19 en vez de 18.
 
 #### DELETE <a name="DELETE"></a> ####
+Sirve para eliminar elementos. La sintaxis será:
+
+	DELETE FROM <nombreTABLE>
+	WHERE ...;
+
+Ejemplo:
+
+	DELETE FROM Alumnos
+	WHERE DNI = '12345678A';
+Esto eliminará al alumno que tenga ese DNI

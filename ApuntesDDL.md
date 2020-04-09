@@ -263,11 +263,8 @@ Al crear la tabla Raza tenemos que añadir una FK a la tabla Habita, el atributo
     ALTER TABLE Cámara
       ADD CONSTRAINT Capacidade_maior_de_cero
     CHECK (capacidade > 0);
+Tenemos que actualizar la tabla Cámara ya que la  capacidad tiene que ser mayor que 0. 
 
-    
-    -- Unha restrición razonable que non aparece no enunciado é
-    -- "non podan estar asignados a unha mesma cámara máis tripulantes dos marcados na capacidade".
-    -- NOTA: Non comprobei contra a base de datos esta solución, pero coido que é correcta.
     CREATE ASSERTION Non_Excedemos_A_Capacidade_Das_Cámaras
     CHECK (NOT EXISTS
       SELECT Cámara.Código_Dependencia
@@ -277,9 +274,10 @@ Al crear la tabla Raza tenemos que añadir una FK a la tabla Habita, el atributo
       GROUP BY Tripulación.Código_Cámara
       HAVING Cámara.Código_Dependencia = Tripulación.Código_Cámara)
     );
+Tras establecer una capacidad mínima, tenemos que establecer una capacidad máxima. Esta capacidad máxima sera el total de la tripulación.
     
     CREATE ASSERTION Non_Excedemos_A_Capacidade_Das_Cámaras
-      -- PSEUDOCÓDIGO OLLO!!!!!
       CHECK (
     Cámara.Capacidade <=
       COUNT(*) GROUP BY Tripulación.Código_Cámara);
+La capacidad mínima de la cámara será el menor o igual a la tripulación.

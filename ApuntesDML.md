@@ -43,4 +43,18 @@ Ejemplo con consulta:
 		WHERE age = 18 ;
 
 #### UPDATE <a name="UPDATE"></a> ####
-Sirve para modificar o actualizar los datos de una base de datos.
+Sirve para modificar o actualizar los datos de una base de datos. La sintaxis será:
+
+	UPDATE <nombreTABLE>
+	SET <nombreAtributo1> = <nombreValue1>
+		<nombreAtributo2> = <nombreValue2>
+	WHERE ...
+	;
+Ejemplo:
+	
+	UPDATE Alumnos
+	SET edad = 19
+	WHERE Nombre='Manuel';
+Lo que hará esto es que el alumno con nombre Manuel tendrá como edad 19 en vez de 18.
+
+#### DELETE <a name="DELETE"></a> ####

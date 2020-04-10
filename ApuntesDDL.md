@@ -24,19 +24,19 @@ DDL, lenguaje de definición de datos, es un sublenguaje de SQL que permite llev
 
 La sentencia Create sirve para crear una nueva base de datos ```CREATE DATABASE``` o ```CREATE SCHEMA```, tabla ```CRREATE TABLE```, dominio ```CREATE DOMAIN```, usarios ```CREATE USER```. Create crea un objeto dentro de un sistema de gestión de bases de datos relacionales, podiendo llegar a crear todos los objetos anteriormente puestos. Ahora especificaremos un poco más cada una de estas sentencias.
 
-#####```CREATE DATABASE ```<a name="id2.1"></a>
+##### ```CREATE DATABASE ```<a name="id2.1"></a>
 Sirve para dar una orden para crear una nueva base de datos, tambien podriamos utilizar la palabra ***SCHEMA*** en vez de ***DATABASE*** para crear una base de datos. La sintaxis que usamos para crear una base de datos es:
 
 	CREATE DATABASE/SCHEMA
 	(Si no existe) nombreDATABASE
 	(CHARACTER SET nombreCHARSET);
 
-#####`CREATE DOMAIN`<a name ="id2.2"></a>
+##### `CREATE DOMAIN`<a name ="id2.2"></a>
 Sirve para no tener que repetir siempre el mismo dato en una base de datos, así cuando aparezcan diferentes atributos con el mismo tipo de datos usaremos un `CREATE DOMAIN`. La sintaxis que usaremos será:
 
     CREATE DOMAIN [nombreDATABASE] (nombreDOMINIO) <tipoDato>;
 	
-#####`CREATE TABLE`<a name ="id2.3"></a>
+##### `CREATE TABLE`<a name ="id2.3"></a>
 Sirve para crear una tabla dentro de una base de datos, el contenido que queramos meter dentro de ella tendrá que ir entre paréntesis. Dentro de los paréntesis pueden ir los atributos, los cuales tenemos que especificar los tipos de datos que queremos que vayan con cada atributo, también tendremos que indicar si hay Primary Keys, Foreign o si es NOT NULL , aunque en el segundo y tercer caso no siempre tiene que existir. La sintaxis que se usará será:
 
 	CREATE TABLE [nombreDATABASE] <nombreTABLE> (
@@ -140,7 +140,7 @@ También los podemos utilizar con `CONSTRAINT`:
 	CHECK nombreATRIBUTO (valor);
 
 #### Ejemplo creación de una base de datos <a name="id6"></a> ####
-![Ejemplo](img/Ejemplo-1.jpeg)
+![Ejemplo](Img/Ejemplo-1.jpeg)
 A través de esta imagen con los datos que nos da el ejercicio haremos la base de datos con lo explicado en estos apuntes.
 
     CREATE DOMAIN Tipo_Código CHAR(5);

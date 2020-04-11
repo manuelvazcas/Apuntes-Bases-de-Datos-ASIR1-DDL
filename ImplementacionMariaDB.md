@@ -4,7 +4,8 @@ Tras hacer los 2 ejercicios los pasaremos a MariaDB usando la ventana de comando
 ### INDICE ###
 - [Ejercicio 1](#ej1)
 	- [creación base de datos](#CBDD)
-	- [creación tablas](#CT)
+	- [CREATE TABLES](#CT)
+	- [ALTER TABLES](#AT)
 - [Ejercicio 2](#ej2)
 
 ### Ejercicio 1 <a name="ej1"></a> ###
@@ -43,7 +44,7 @@ En MariaDB:
 	 CREATE TABLE Ubicación (
     	Nombre_Departamento VARCHAR(50),
     	Nombre_Sede         VARCHAR(50),
-    	CONSTRAINT PK_Ubicación PRIMARY KEY (Nombre_Departamento, Nombre_Sede),
+    	CONSTRAINT PK_Ubicacion PRIMARY KEY (Nombre_Departamento, Nombre_Sede),
     	FOREIGN KEY (Nombre_Departamento) REFERENCES Departamento(Nombre_Departamento) 
     	ON UPDATE CASCADE 
     	ON DELETE CASCADE,
@@ -60,8 +61,8 @@ En MariaDB:
 	CREATE TABLE Grupo_Investigación (
     	Nombre_Grupo        VARCHAR(50),
     	Nombre_Departamento VARCHAR(50),
-    	Área_Conocimiento   VARCHAR(50) NOT NULL,
-    	CONSTRAINT PK_Grupo_Investigación PRIMARY KEY (Nombre_Grupo, Nombre_Departamento),
+    	Area_Conocimiento   VARCHAR(50) NOT NULL,
+    	CONSTRAINT PK_Grupo_Investigacion PRIMARY KEY (Nombre_Grupo, Nombre_Departamento),
     	FOREIGN KEY (Nombre_Departamento) REFERENCES Departamento(Nombre_Departamento) 
 	    ON UPDATE CASCADE 
 	    ON DELETE CASCADE
@@ -79,7 +80,7 @@ En MariaDB:
     	Experiencia    INTEGER,
     	N_Grupo        VARCHAR(50),
     	N_Departamento VARCHAR(50),
-    	CONSTRAINT FK_Grupo_Profesor FOREIGN KEY (N_Grupo, N_Departamento) REFERENCES Grupo_Investigación(Nombre_Grupo, Nombre_Departamento)
+    	CONSTRAINT FK_Grupo_Profesor FOREIGN KEY (N_Grupo, N_Departamento) REFERENCES Grupo_Investigacion(Nombre_Grupo, Nombre_Departamento)
     	ON UPDATE CASCADE 
     	ON DELETE SET NULL  
 	);	
@@ -90,13 +91,13 @@ En MariaDB:
 ##### Participación #####
 Pararemos de escribir el CONSTRAINT entero.
 
-	 CREATE TABLE Participación (
+	 CREATE TABLE Participacion (
     	DNI_Profesor CHAR(9),
-    	Código_Proyecto CHAR(5),
+    	Codigo_Proyecto CHAR(5),
     	Fecha_Incorporación DATE,
     	Fecha_Cese DATE,
     	Horas_Semanales INTEGER NOT NULL,
-    	PRIMARY KEY (DNI_Profesor, Código_Proyecto),
+    	PRIMARY KEY (DNI_Profesor, Codigo_Proyecto),
     	FOREIGN KEY (DNI_Profesor) REFERENCES Profesor(DNI) 
     	ON UPDATE CASCADE
     	ON DELETE NO ACTION 
@@ -107,15 +108,15 @@ En MariaDB:
 
 ##### Proyecto #####
 
-	CREATE TABLE Proyecto_Investigación (
-    	Código_Proyecto CHAR(5) PRIMARY KEY, 
+	CREATE TABLE Proyecto_Investigacion (
+    	Codigo_Proyecto CHAR(5) PRIMARY KEY, 
     	Nombre_Proyecto VARCHAR(50) NOT NULL,
     	Presupuesto INTEGER,
     	Fecha_Inicio DATE,
     	Fecha_Fin    DATE,
     	N_Grupo VARCHAR(50),
     	N_Departamento VARCHAR(50),
-    	FOREIGN KEY (N_Grupo, N_Departamento) REFERENCES Grupo_Investigación(Nombre_Grupo, nombre_Departamento)
+    	FOREIGN KEY (N_Grupo, N_Departamento) REFERENCES Grupo_Investigacion(Nombre_Grupo, nombre_Departamento)
     	ON UPDATE CASCADE 
     	ON DELETE NO ACTION
 	);
@@ -125,13 +126,13 @@ En MariaDB:
 
 ##### Financiación #####
 
-	CREATE TABLE Financiación (
-    	Código_Proyecto VARCHAR(5),
+	CREATE TABLE Financiacion (
+    	Codigo_Proyecto VARCHAR(5),
     	Nombre_Programa VARCHAR(50),
-    	Número_Asociado INTEGER NOT NULL,
+    	Numero_Asociado INTEGER NOT NULL,
     	Cantidad_Dinero INTEGER NOT NULL,  
-    	PRIMARY KEY (Código_Proyecto, Nombre_Programa),
-    	FOREIGN KEY (Código_Proyecto) REFERENCES Proyecto_Investigación(Código_Proyecto) 
+    	PRIMARY KEY (Codigo_Proyecto, Nombre_Programa),
+    	FOREIGN KEY (Codigo_Proyecto) REFERENCES Proyecto_Investigacion(Codigo_Proyecto) 
     	ON UPDATE CASCADE
     	ON DELETE CASCADE
 	);
@@ -155,3 +156,64 @@ En MariaDB:
 Tras acabar de crear las tablas, antes de ir a crear los `ALTER` comprobaremos que están todas creadas con el comando `SHOW TABLES`:
 
 ![](Img/ejercicio1-11.PNG)
+
+#### ALTER TABLES <a name="AT"></a> ####
+Despues de crear todas las tablas, usaremos ALTER para añadir los datos para relacionarlas entre ellas y para acabar los check.
+
+##### Departamento #####
+En departamento tendremos que añadir la columna de director y luego hacerla una FK de la tabla Profesor.
+
+	ALTER TABLE Departamento ADD COLUMN Director CHAR(9)
+	ALTER TABLE Departamento ADD FOREIGN KEY (Director) REFERENCES Profesor (DNI)
+								 ON UPDATE CASCADE
+								 ON DELETE SET NULL
+En MariaDB:
+
+![](Img/ejercicio1-12.PNG)
+
+##### Grupo investigación #####
+	
+	ALTER TABLE Grupo_Investigacion ADD COLUMN Líder CHAR(9);
+	ALTER TABLE Grupo_Investigacion ADD CONSTRAINT FK_Profesor_Grupo FOREIGN KEY (Líder) REFERENCES Profesor(DNI)
+                                                   				     ON UPDATE CASCADE
+                                                   					 ON DELETE SET NULL;
+En MariaDB:
+![](Img/ejercicio1-13.PNG)
+
+##### Profesor #####
+
+	ALTER TABLE Profesor ADD CONSTRAINT Experiencia CHECK (Experiencia BETWEEN 1 AND 50);
+En MariaDB:
+
+![](Img/ejercicio1-14.PNG)
+
+##### Participación #####
+
+	ALTER TABLE Participacion ADD FOREIGN KEY (Codigo_Proyecto) REFERENCES Proyecto(Codigo_Proyecto) 
+                                  ON UPDATE CASCADE
+                                  ON DELETE NO ACTION;
+	ALTER TABLE Participacion ADD CONSTRAINT Comprobacion_Fechas CHECK (Fecha_Incorporacion < Fecha_Cese);
+En MariaDB:
+
+![](Img/ejercicio1-15.PNG)
+
+##### Proyecto #####
+
+	ALTER TABLE Proyecto ADD CONSTRAINT Comprobacion_Presupuesto CHECK (Presupuesto > 0);
+	ALTER TABLE Proyecto ADD CONSTRAINT Comprobacion_Fechas CHECK (Fecha_Inicio < Fecha_Fin);
+	ALTER TABLE Proyecto ADD CONSTRAINT Unicidad_Nombre UNIQUE(Nombre_Proyecto);
+En MariaDB:
+
+![](Img/ejercicio1-16.PNG)
+
+##### Financiación #####
+
+	ALTER TABLE Financiacion ADD FOREIGN KEY (Nombre_Programa) REFERENCES Programa(Nombre_Programa) 
+                                 ON UPDATE CASCADE
+                                 ON DELETE CASCADE;
+	ALTER TABLE Financiacion ADD CONSTRAINT Unicidad_Asociado UNIQUE(Numero_Asociado);
+En MariaDB:
+
+![](Img/ejercicio1-17.PNG)
+
+Hasta aquí estaría acabado el ejercicio 1.

@@ -20,15 +20,6 @@ Abrimos la ventana de comandos y entramos en MariaDB con el comando `mysql -u ro
 #### Creación tablas <a name="CT"></a> ####
 Empezamos a crear las tablas.
 
-##### Departamento #####
-	CREATE TABLE Departamento (
-    	Nombre_Departamento VARCHAR(50) PRIMARY KEY,
-    	Teléfono            VARCHAR(9)
-	);
-En MariaDB:
-
-![](Img/ejercicio1-2.PNG)
-
 ##### Sede #####
 	CREATE TABLE Sede (
     	Nombre_Sede VARCHAR(50) PRIMARY KEY,
@@ -37,6 +28,15 @@ En MariaDB:
 En MariaDB:
 
 ![](Img/ejercicio1-3.PNG)
+
+##### Departamento #####
+	CREATE TABLE Departamento (
+    	Nombre_Departamento VARCHAR(50) PRIMARY KEY,
+    	Teléfono            VARCHAR(9)
+	);
+En MariaDB:
+
+![](Img/ejercicio1-2.PNG)
 
 ##### Ubicación #####
 
@@ -86,3 +86,72 @@ En MariaDB:
 En MariaDB:
 
 ![](Img/ejercicio1-6.PNG)
+
+##### Participación #####
+Pararemos de escribir el CONSTRAINT entero.
+
+	 CREATE TABLE Participación (
+    	DNI_Profesor CHAR(9),
+    	Código_Proyecto CHAR(5),
+    	Fecha_Incorporación DATE,
+    	Fecha_Cese DATE,
+    	Horas_Semanales INTEGER NOT NULL,
+    	PRIMARY KEY (DNI_Profesor, Código_Proyecto),
+    	FOREIGN KEY (DNI_Profesor) REFERENCES Profesor(DNI) 
+    	ON UPDATE CASCADE
+    	ON DELETE NO ACTION 
+	);
+En MariaDB:
+
+![](Img/ejercicio1-7.PNG)
+
+##### Proyecto #####
+
+	CREATE TABLE Proyecto_Investigación (
+    	Código_Proyecto CHAR(5) PRIMARY KEY, 
+    	Nombre_Proyecto VARCHAR(50) NOT NULL,
+    	Presupuesto INTEGER,
+    	Fecha_Inicio DATE,
+    	Fecha_Fin    DATE,
+    	N_Grupo VARCHAR(50),
+    	N_Departamento VARCHAR(50),
+    	FOREIGN KEY (N_Grupo, N_Departamento) REFERENCES Grupo_Investigación(Nombre_Grupo, nombre_Departamento)
+    	ON UPDATE CASCADE 
+    	ON DELETE NO ACTION
+	);
+En MariaDB:
+
+![](Img/ejercicio1-8.PNG)
+
+##### Financiación #####
+
+	CREATE TABLE Financiación (
+    	Código_Proyecto VARCHAR(5),
+    	Nombre_Programa VARCHAR(50),
+    	Número_Asociado INTEGER NOT NULL,
+    	Cantidad_Dinero INTEGER NOT NULL,  
+    	PRIMARY KEY (Código_Proyecto, Nombre_Programa),
+    	FOREIGN KEY (Código_Proyecto) REFERENCES Proyecto_Investigación(Código_Proyecto) 
+    	ON UPDATE CASCADE
+    	ON DELETE CASCADE
+	);
+En `Cantidad_Dinero` pongo INTEGER ya que MONEY en MariaDB no funciona.
+
+En MariaDB:
+
+![](Img/ejercicio1-9.PNG)
+
+##### Programa #####
+
+	CREATE TABLE Programa (
+	Nombre_Programa VARCHAR(50) PRIMARY KEY
+	);
+
+En MariaDB:
+
+![](Img/ejercicio1-10.PNG)
+
+##### Resultado tablas #####
+Tras acabar de crear las tablas, antes de ir a crear los `ALTER` comprobaremos que están todas creadas con el comando `SHOW TABLES`:
+
+![](Img/ejercicio1-11.PNG)

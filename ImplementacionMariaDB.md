@@ -7,6 +7,9 @@ Tras hacer los 2 ejercicios los pasaremos a MariaDB usando la ventana de comando
 	- [CREATE TABLES](#CT)
 	- [ALTER TABLES](#AT)
 - [Ejercicio 2](#ej2)
+	- [creación base de datos](#CBDD2)
+	- [CREATE TABLES](#CT2)
+	- [ALTER TABLES](#AT2)
 
 ### Ejercicio 1 <a name="ej1"></a> ###
 Antes  de empezar el ejercicio hay que especificar un poco los criterios que seguiremos para hacer la base de datos.
@@ -217,3 +220,191 @@ En MariaDB:
 ![](Img/ejercicio1-17.PNG)
 
 Hasta aquí estaría acabado el ejercicio 1.
+
+### Ejercicio 2 <a name="ej2"></a>###
+En este ejercicio seguiremos los mismos criterios que en el anterior.
+
+#### Creación base de datos  <a name="CBDD2"></a>####
+Como hicimos en el ejercicio anterior creamos la base de datos.
+
+![](Img/ejercicio2-1.PNG)
+
+![](Img/ejercicio2-2.PNG)
+
+#### Creación tablas <a name="CT2"></a> ####
+Empezamos a  crear las tablas.
+
+##### Servicio #####
+	
+	CREATE TABLE Servicio (
+		Clave_Servicio CHAR(5),
+		Nombre_Servicio VARCHAR(40),
+		PRIMARY KEY (Clave_Servicio, Nombre_Servicio)
+	);
+En MariaDB:
+
+![](Img/ejercicio2-3.PNG)
+
+##### Dependencia #####
+
+	CREATE TABLE Dependencia (
+		Codigo_Dependencia CHAR (5),
+		Nombre_Dependencia VARCHAR (40),
+		Funcion VARCHAR (20),
+		Localizacion VARCHAR (20),
+		Clave_Servicio CHAR (5) NOT NULL,
+		Nombre_Servicio VARCHAR(40),
+		PRIMARY KEY (Codigo_Dependencia),
+		Unique (Nombre_Dependencia),
+		FOREIGN KEY (Clave_Servicio, Nombre_Servicio) REFERENCES Servicio (Clave_Servicio, Nombre_Servicio)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+	);
+En MariaDB:
+
+![](Img/ejercicio2-4.PNG)
+
+##### Cámara #####
+
+	CREATE TABLE Camara (
+		Codigo_Dependencia CHAR(5),
+		Categoria VARCHAR(40) NOT NULL,
+		Capacidad INTEGER NOT NULL,
+		PRIMARY KEY (Codigo_Dependencia),
+		FOREIGN KEY (Codigo_Dependencia) REFERENCES Dependencia (Codigo_Dependencia)
+    	ON UPDATE Cascade
+    	ON DELETE Cascade
+	);
+En MariaDB:
+
+![](Img/ejercicio2-5.PNG)
+
+##### Tripulacion #####
+
+	CREATE TABLE Tripulacion (
+		Codigo_Tripulacion CHAR(5) PRIMARY KEY,
+		Nombre_Tripulacion VARCHAR(40),
+		Categoria CHAR(20) NOT NULL,
+		Antiguedad INTEGER DEFAULT 0,
+		Procedencia CHAR(20),
+		Adm CHAR(20) NOT NULL,
+		Codigo_Dependencia CHAR(5) NOT NULL,
+		Codigo_Camara CHAR(5) NOT NULL,
+		FOREIGN KEY (Codigo_Camara) REFERENCES Camara (Codigo_Dependencia) 
+		ON UPDATE CASCADE
+    	ON DELETE CASCADE,
+		FOREIGN KEY (Codigo_Dependencia) REFERENCES Dependencia (Codigo_Dependencia)
+    	ON UPDATE CASCADE
+    	ON DELETE CASCADE
+	);
+En MariaDB:
+
+![](Img/ejercicio2-6.PNG)
+
+##### Planeta #####
+
+	CREATE TABLE Planeta (
+	Codigo_Planeta CHAR(5) PRIMARY KEY,
+	Nombre_Planeta VARCHAR(40) NOT NULL UNIQUE,
+	Galaxia CHAR(15) NOT NULL,
+	Coordenadas CHAR(15) NOT NULL,
+	UNIQUE(Coordenadas)	
+	);
+En MariaDB:
+
+![](Img/ejercicio2-7.PNG)
+
+##### Visita #####
+
+	CREATE TABLE Visita (
+		Codigo_Tripulacion CHAR(5),
+		Codigo_Planeta CHAR(5),
+		Fecha_Visita DATE,
+		Tiempo INTEGER NOT NULL,
+		PRIMARY KEY (Codigo_Tripulacion, Codigo_Planeta, Fecha_Visita),
+		FOREIGN KEY (Codigo_Tripulacion) REFERENCES Tripulacion (Codigo_Tripulacion)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+		FOREIGN KEY (Codigo_Planeta) REFERENCES Planeta (Codigo_Planeta)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE 
+	);
+En MariaDB:
+
+![](Img/ejercicio2-8.PNG)
+
+##### Habita #####
+
+	CREATE TABLE Habita ( 
+		Codigo_Planeta CHAR(5),
+		Nombre_Raza VARCHAR(40),
+		Poblacion_Parcial INTEGER NOT NULL,
+		PRIMARY KEY (Codigo_Planeta, Nombre_Raza),
+		FOREIGN KEY (Codigo_Planeta) REFERENCES Planeta (Codigo_Planeta)
+		ON UPDATE Cascade
+		ON DELETE Cascade
+	);
+En MariaDB:
+
+![](Img/ejercicio2-9.PNG)
+
+##### RAZA #####
+
+	CREATE TABLE Raza (
+		Nombre_Raza VARCHAR(40)  PRIMARY KEY,
+		Altura INTEGER NOT NULL, -- cm
+		Anchura INTEGER NOT NULL, -- cm
+		Peso INTEGER NOT NULL, -- g
+		Poblacion_Total INTEGER NOT NULL
+	);
+En MariaDB:
+
+![](Img/ejercicio2-10.PNG)
+
+#### ALTER TABLES <a name="AT2"></a> ####
+Despues de crear todas las tablas, usaremos ALTER para añadir los datos para relacionarlas entre ellas y para acabar los check.
+
+##### Habita #####
+Tras crear la tabla raza falta por crear una FOREIGN KEY en la tabla de habita.
+
+	ALTER TABLE Habita
+		ADD CONSTRAINT FK_Raza
+		FOREIGN KEY (Nombre_Raza) REFERENCES Raza (Nombre_Raza)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE;
+En MariaDB:
+
+![](Img/ejercicio2-11.PNG)
+
+	ALTER TABLE HABITA
+		ADD CONSTRAINT poblacion_mayor_0
+		CHECK (poblacion_Parcial > 0);
+En MariaDB:
+
+![](Img/ejercicio2-13.PNG)
+
+##### Camara #####
+
+	ALTER TABLE Camara
+		ADD CONSTRAINT Capacidad_mayor_0
+		CHECK (capacidad > 0);
+En MariaDB:
+
+![](Img/ejercicio2-12.PNG)
+
+##### Raza #####
+
+	ALTER TABLE RAZA
+		ADD CONSTRAINT altura_mayor_0
+		CHECK (altura > 0),
+		ADD CONSTRAINT anchura_mayor_0
+		CHECK (anchura > 0),
+		ADD CONSTRAINT peso_mayor_0
+		CHECK (peso > 0),
+		ADD CONSTRAINT poblacion_mayor_0
+		CHECK (poblacion_total > 0);
+En MariaDB:
+
+![](Img/ejercicio2-14.PNG)
+
+Hasta aquí el ejercicio 2.

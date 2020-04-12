@@ -221,10 +221,10 @@ En MariaDB:
 
 Hasta aquí estaría acabado el ejercicio 1.
 
-### Ejercicio 2 <a name="ej2"></a>###
+### Ejercicio 2 <a name="ej2"></a> ###
 En este ejercicio seguiremos los mismos criterios que en el anterior.
 
-#### Creación base de datos  <a name="CBDD2"></a>####
+#### Creación base de datos  <a name="CBDD2"></a> ####
 Como hicimos en el ejercicio anterior creamos la base de datos.
 
 ![](Img/ejercicio2-1.PNG)

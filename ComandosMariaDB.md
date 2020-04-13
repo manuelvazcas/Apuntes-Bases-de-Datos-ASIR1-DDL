@@ -8,6 +8,8 @@ En esta tarea se mostrarán comandos de MariaDB que permiten ver la estructura y
 - [Mostrar tablas](#SHOWT)
 - [Describir una tabla](#DESC)
 - [mostrar Index tabla](#INDEX)
+- [Renombrar una tabla](#RENAME)
+- [Reparar una tabla](#REPAIR)
 - [Exportar una base de datos](#EXPORT)
 
 ### Logearse en MariaDB <a name="LOGIN"></a>
@@ -39,17 +41,41 @@ Si queremos que la información que se muestre sea mucho mayor usaremos el coman
 	SHOW tables status;
 ![](Img/Comandos-9.PNG)
 
+Para especificar una tabla en concreto sería:
+
+	SHOW table status like <nombreTable>;
+![](Img/Comandos-10.PNG)
+
 ### Describir una tabla <a name="DESC"></a> ###
 Este comando nos sirve para poder ver la estructura interna de una tabla, sus atributos, de que tipo son, cual es la clave primaria, si hay claves foraneas... La sintaxis sería:
 
 	Describe <nombreTable>;
 ![](Img/Comandos-5.PNG)
 
+Otra manera de escribir este comando sería:
+
+	SHOW COLUMNS from <nombreTable>;
+![](Img/Comandos-11.PNG)
+
 ### Mostrar Index tabla <a name="INDEX"></a> ###
 Este comando sirve para poder ver la información de los indices de la tabla que seleccionemos. La sintaxis sería:
 
 	SHOW INDEX FROM <nombreTable>;
 ![](Img/Comandos-6.PNG)
+
+### Renombrar una tabla <a name="RENAME"></a> ###
+Este comando sirve para poder cambiar el nombre a una tabla ya creada sin tener que borrarla y volver a crearla. La sintaxis será:
+
+	RENAME table <nombreTABLE> to <nombreTableNuevo>;
+![](Img/Comandos-12.PNG)
+
+### Reparar una tabla <a name="REPAIR"></a> ###
+Este comando sirve para reparar una tabla si tiene algun tipo de fallo o error. La sintaxis será:
+	
+	REPAIR table <nombreTable>;
+![](Img/Comandos-13.PNG)
+
+
 
 ### Exportar una base de datos <a name="EXPORT"></a> ###
 Este comando nos servirá para exportar una base de datos a un fichero .sql. La sintaxis será:

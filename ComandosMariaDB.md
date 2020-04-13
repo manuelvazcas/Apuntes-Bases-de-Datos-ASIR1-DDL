@@ -7,7 +7,7 @@ En esta tarea se mostrarán comandos de MariaDB que permiten ver la estructura y
 - [Usar una base de datos](#USE)
 - [Mostrar tablas](#SHOWT)
 - [Describir una tabla](#DESC)
-- [mostrar Index tabla](#INDEX)
+- [Mostrar Index tabla](#INDEX)
 - [Renombrar una tabla](#RENAME)
 - [Reparar una tabla](#REPAIR)
 - [Optimizar una tabla](#OPTI)

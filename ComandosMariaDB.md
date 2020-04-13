@@ -12,6 +12,7 @@ En esta tarea se mostrarán comandos de MariaDB que permiten ver la estructura y
 - [Reparar una tabla](#REPAIR)
 - [Optimizar una tabla](#OPTI)
 - [Borrar Registro](#TRUN)
+- [Comentar una tabla](#COMMENT)
 - [Exportar una base de datos](#EXPORT)
 
 ### Logearse en MariaDB <a name="LOGIN"></a>
@@ -91,6 +92,12 @@ Este comando sirve para borrar todos los registros de la tabla que seleccionemos
 ![](Img/Comandos-15.PNG)
 
 Con esta tabla no podremos borrar el registro ya que tiene FK.
+
+### Comentar una tabla <a name="COMMENT"></a> ###
+Este comando nos servirá para poder tener un comentario en una tabla o modificarlo si ya tiene uno establecido. La sintaxis será:
+
+	Alter table <nombreTable> comment='';
+![](Img/Comandos-16.PNG)
 
 ### Exportar una base de datos <a name="EXPORT"></a> ###
 Este comando nos servirá para exportar una base de datos a un fichero .sql. La sintaxis será:

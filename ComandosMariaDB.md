@@ -10,6 +10,8 @@ En esta tarea se mostrarán comandos de MariaDB que permiten ver la estructura y
 - [mostrar Index tabla](#INDEX)
 - [Renombrar una tabla](#RENAME)
 - [Reparar una tabla](#REPAIR)
+- [Optimizar una tabla](#OPTI)
+- [Borrar Registro](#TRUN)
 - [Exportar una base de datos](#EXPORT)
 
 ### Logearse en MariaDB <a name="LOGIN"></a>
@@ -75,7 +77,20 @@ Este comando sirve para reparar una tabla si tiene algun tipo de fallo o error. 
 	REPAIR table <nombreTable>;
 ![](Img/Comandos-13.PNG)
 
+En esta tabla este comando no funciona ya que no tiene ningun dato añadido la los atributos, con el siguiente comandos pasará lo mismo.
+### Optimizar una tabla <a name="OPTI"></a> ###
+Este comando sirve para optimizar las tablas y que funcione todo mejor. La sintaxis será:
 
+	OPTIMIZE table <nombreTABLE>;
+![](Img/Comandos-14.PNG)
+
+### Borrar registro <a name="TRUN"></a> ###
+Este comando sirve para borrar todos los registros de la tabla que seleccionemos. La sintaxis será:
+
+	TRUNCATE table <nombreTABLE>;
+![](Img/Comandos-15.PNG)
+
+Con esta tabla no podremos borrar el registro ya que tiene FK.
 
 ### Exportar una base de datos <a name="EXPORT"></a> ###
 Este comando nos servirá para exportar una base de datos a un fichero .sql. La sintaxis será:

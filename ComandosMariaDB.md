@@ -34,6 +34,11 @@ Una vez ya selecciona la base de datos que queremos usar y creadas las tablas po
 	SHOW tables;
 ![](Img/Comandos-4.PNG)
 
+Si queremos que la información que se muestre sea mucho mayor usaremos el comando:
+
+	SHOW tables status;
+![](Img/Comandos-9.PNG)
+
 ### Describir una tabla <a name="DESC"></a> ###
 Este comando nos sirve para poder ver la estructura interna de una tabla, sus atributos, de que tipo son, cual es la clave primaria, si hay claves foraneas... La sintaxis sería:
 
@@ -46,5 +51,14 @@ Este comando sirve para poder ver la información de los indices de la tabla que
 	SHOW INDEX FROM <nombreTable>;
 ![](Img/Comandos-6.PNG)
 
-### Exportar una base de dato <a name="EXPORT"></a> ###
-Este comando nos servirá para exportar una base de datos a un fichero .sql. La sintaxis será
+### Exportar una base de datos <a name="EXPORT"></a> ###
+Este comando nos servirá para exportar una base de datos a un fichero .sql. La sintaxis será:
+
+	mysqldump -u [nombreUsuario] -p[PASSWORD] [nombreDatabase] > fichero.sql
+Podemos ver como el archivo se guarda con el nombre que le pongamos y en la ruta desde donde ejecutemos el comando será donde se guarde el archivo.
+
+![](Img/Comandos-7.PNG) 
+
+![](Img/Comandos-8.PNG)
+
+El comando para hacer un Import de un archivo será el mismo pero cambiando el > por <.

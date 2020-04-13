@@ -114,7 +114,7 @@ Sirve para no aceptar valores nulos. La sintaxis será:
 	);
 Esto hace que el atributo 2 no pueda ir vacío, tendremos que darle un valor.
 
-##### CONSTRAINT UNIQUE <a name="id5.3"></a> #####
+##### CONSTRAINT UNIQUE <a name="id5.4"></a> #####
 Sirve para hacer que no se pueda repetir los elementos de la columna, la podemos acompañar junto a `NOT NULL`. La sintaxis será: 
 	
 	 CREATE TABLE nombreTable (
@@ -126,7 +126,7 @@ También los podemos utilizar con `CONSTRAINT`:
 	
 	CONSTRAINT UQ UNIQUE (nombreATRIBUTO,...);
 
-##### CONSTRAINT CHECK <a name="id5.4"></a> #####
+##### CONSTRAINT CHECK <a name="id5.5"></a> #####
 Sirve para limitar el rango de valores que puede tener una columna. Una tabla puede tener varios `CHECK`. La sintaxis sería:
 	
 	 CREATE TABLE nombreTable (

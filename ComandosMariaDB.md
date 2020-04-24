@@ -108,5 +108,3 @@ Podemos ver como el archivo se guarda con el nombre que le pongamos y en la ruta
 ![](Img/Comandos-7.PNG) 
 
 ![](Img/Comandos-8.PNG)
-
-El comando para hacer un Import de un archivo será el mismo pero cambiando el > por <.

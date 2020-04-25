@@ -49,6 +49,11 @@ Para especificar una tabla en concreto sería:
 	SHOW table status like <nombreTable>;
 ![](Img/Comandos-10.PNG)
 
+Tambien podemos usar un comando para enseñar como es la tabla a nivel de código:
+
+	SHOW CREATE TABLE;
+![](Img/Comandos-17.PNG)
+
 ### Describir una tabla <a name="DESC"></a> ###
 Este comando nos sirve para poder ver la estructura interna de una tabla, sus atributos, de que tipo son, cual es la clave primaria, si hay claves foraneas... La sintaxis sería:
 
